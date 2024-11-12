@@ -31,7 +31,7 @@ export default function CustomerList() {
             const response = await fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers')
             const data = await response.json();
             setCustomers(data._embedded.customers)
-            console.log(data)
+            //console.log(data)
             
         }
         catch (e) {

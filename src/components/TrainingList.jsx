@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { format } from "date-fns";
+import { Button } from "@mui/material";
 import "./TrainingList.css"
 
 import "ag-grid-community/styles/ag-grid.css";
@@ -12,7 +13,14 @@ export default function TrainingList() {
         { field: "date", headerName: "Date" },
         { field: "duration", headerName: "Duration" },
         { field: "activity", headerName: "Activity" },
-        { field: "customerName", headerName: "Customer" }
+        { field: "customerName", headerName: "Customer" },
+        { 
+            field: '_links.self.href',
+            headerName: '',
+            sortable: false,
+            filter: false,
+            cellRenderer: params => <Button onClick={() => deleteTraining(params.data._links.self.href)}>Delete</Button>
+        }
     ])
     const defaultColDef = {
         sortable: true,
@@ -60,6 +68,21 @@ export default function TrainingList() {
         }
         catch (e) {
             console.error(e);
+        }
+    }
+
+    const deleteTraining = async (url) => {
+        const options = {
+            method: 'DELETE'
+        }
+        try {
+            if (confirm("Delete Training?")){
+                const response = await fetch(url, options)
+                fetchTrainings();
+            }
+        }
+        catch (e) {
+            console.error(e)
         }
     }
 

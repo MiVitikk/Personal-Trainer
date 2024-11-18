@@ -3,6 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import { Button } from "@mui/material";
 import "./CustomerList.css"
 import AddCustomer from "./AddCustomer";
+import EditCustomer from "./EditCustomer";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
@@ -24,6 +25,13 @@ export default function CustomerList() {
             filter: false,
             cellRenderer: params => <Button onClick={() => deleteCustomer(params.data._links.self.href)}>Delete</Button>
         },
+        {
+            field: '_links.self.href',
+            headerName: '',
+            sortable: false,
+            filter: false,
+            cellRenderer: params  => <EditCustomer updateCustomer={updateCustomer} customer={params.data}/>
+        }
     ])
     const defaultColDef = {
         sortable: true,
@@ -83,6 +91,18 @@ export default function CustomerList() {
             console.error(e)
         }
     
+    }
+
+    const updateCustomer = (customer, link) => {
+        fetch(link, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(customer)
+        })
+        .then(res => fetchCustomers())
+        .catch(err => console.error(err))
     }
 
     useEffect(() => {

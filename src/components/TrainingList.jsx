@@ -3,6 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import { format } from "date-fns";
 import { Button } from "@mui/material";
 import "./TrainingList.css"
+import AddTraining from "./AddTraining";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
@@ -62,7 +63,7 @@ export default function TrainingList() {
             setTrainings(trainingsWithCustomers); 
             console.log(trainingsWithCustomers);
 
-            console.log(trainingsWithCustomers);
+            
 
 
         }
@@ -98,6 +99,7 @@ export default function TrainingList() {
 
     return (
         <div className="TrainingList">
+            <AddTraining/>
             <div className="ag-theme-material" style={{ width: "100%", height: "800px" }}>
                 <AgGridReact
                     ref={gridRef}

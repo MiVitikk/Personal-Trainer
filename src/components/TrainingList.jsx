@@ -72,6 +72,25 @@ export default function TrainingList() {
         }
     }
 
+    const saveTrainning = async (training) => {
+        const options ={
+            method: 'POST',
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(training)
+        }
+        try {
+            const response = await fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings', options)
+            const data = await response.json()
+        }
+        catch (e) {
+            console.error(e)
+        }
+        fetchTrainings();
+    }
+
     const deleteTraining = async (url) => {
         const options = {
             method: 'DELETE'
@@ -99,7 +118,7 @@ export default function TrainingList() {
 
     return (
         <div className="TrainingList">
-            <AddTraining/>
+            <AddTraining saveTrainning={saveTrainning}/>
             <div className="ag-theme-material" style={{ width: "100%", height: "800px" }}>
                 <AgGridReact
                     ref={gridRef}

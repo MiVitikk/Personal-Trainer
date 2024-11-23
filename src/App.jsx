@@ -11,6 +11,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {TabPanel} from "@mui/lab"
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
+import EventCalendar from './components/Calendar/EventCalendar';
 
 
 function App() {
@@ -37,12 +38,12 @@ function App() {
               <TabList onChange={handleChange} aria-label="tabs">
                 <Tab label="Customers" value="1" />
                 <Tab label="Trainings" value="2" />
-
+                <Tab label="Calendar" value="3" />
               </TabList>
             </Box>
             <TabPanel value="1"><CustomerList /></TabPanel>
-            <TabPanel value="2"><TrainingList />
-            </TabPanel>
+            <TabPanel value="2"><TrainingList /></TabPanel>
+            <TabPanel value="3"><EventCalendar /></TabPanel>
 
           </TabContext>
         </Box>

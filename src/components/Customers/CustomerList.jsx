@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { Button } from "@mui/material";
+import { CSVLink, CSVDownload } from "react-csv";
 import "./CustomerList.css"
 import AddCustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
@@ -10,27 +11,29 @@ import "ag-grid-community/styles/ag-theme-material.css";
 
 export default function CustomerList() {
     const [customers, setCustomers] = useState([]);
+    
+    
     const [columnDefs, setColumnDefs] = useState([
-        { field: "firstname"},
-        { field: "lastname"},
-        { field: "streetaddress"},
-        { field: "postcode"},
-        { field: "city"},
-        { field: "email"},
-        { field: "phone"},
+        { field: "firstname" },
+        { field: "lastname" },
+        { field: "streetaddress" },
+        { field: "postcode" },
+        { field: "city" },
+        { field: "email" },
+        { field: "phone" },
         {
             field: '_links.self.href',
-            headerName: '',
+            headerName: 'Delete',
             sortable: false,
             filter: false,
             cellRenderer: params => <Button onClick={() => deleteCustomer(params.data._links.self.href)}>Delete</Button>
         },
         {
             field: '_links.self.href',
-            headerName: '',
+            headerName: 'Edit',
             sortable: false,
             filter: false,
-            cellRenderer: params  => <EditCustomer updateCustomer={updateCustomer} customer={params.data}/>
+            cellRenderer: params => <EditCustomer updateCustomer={updateCustomer} customer={params.data} />
         }
     ])
     const defaultColDef = {
@@ -50,6 +53,8 @@ export default function CustomerList() {
             setCustomers(data._embedded.customers)
             console.log(data)
             
+            
+
         }
         catch (e) {
             console.error(e)
@@ -61,10 +66,10 @@ export default function CustomerList() {
             method: 'POST',
             mode: 'cors',
             headers: {
-                'Accept' : 'application/json',
-                'Content-Type' : 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body : JSON.stringify(customer)
+            body: JSON.stringify(customer)
         }
         try {
             const response = await fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers', options)
@@ -82,15 +87,15 @@ export default function CustomerList() {
         }
 
         try {
-            if(confirm("Delete customer?")){
-                const response = await fetch (url, options);
+            if (confirm("Delete customer?")) {
+                const response = await fetch(url, options);
                 fetchCustomers();
             }
         }
         catch (e) {
             console.error(e)
         }
-    
+
     }
 
     const updateCustomer = (customer, link) => {
@@ -101,20 +106,22 @@ export default function CustomerList() {
             },
             body: JSON.stringify(customer)
         })
-        .then(res => fetchCustomers())
-        .catch(err => console.error(err))
+            .then(res => fetchCustomers())
+            .catch(err => console.error(err))
     }
 
     useEffect(() => {
         fetchCustomers()
     }
-    , []);
+        , []);
+
 
 
     return (
         <div className="CustomerList">
             <AddCustomer saveCustomer={saveCustomer} />
-            <div className="ag-theme-material" style={{ width: "100%", height: 800}}>
+            <CSVLink className='download' data={customers}>DOWNLOAD CUSTOMERS</CSVLink>
+            <div className="ag-theme-material" style={{ width: "100%", height: 800 }}>
                 <AgGridReact
                     rowData={customers}
                     columnDefs={columnDefs}

@@ -11,7 +11,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import { formatISO, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import InputLabel from '@mui/material/InputLabel';
 
 
@@ -27,7 +27,7 @@ import Select from '@mui/material/Select';
 
 export default function AddTraining(props) {
     const [training, setTraining] = useState({
-        date: parseISO('2022-04-17T15:30:00'),
+        date: parseISO('2024-11-25T15:30:00'),
         duration: '',
         activity: '',
         customer: ''
@@ -69,7 +69,7 @@ export default function AddTraining(props) {
     };
 
     const handleDateChange = (date) => {
-        setTraining({ ...training, date: toIsoString(date) });
+        setTraining({ ...training, date });
       };
     
       const handleCustomerChange = (event) => {

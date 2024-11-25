@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import './App.css'
-import CustomerList from './components/CustomerList'
-import TrainingList from './components/TrainingList';
+import CustomerList from './components/Customers/CustomerList'
+import TrainingList from './components/Trainings/TrainingList';
 import { Container } from '@mui/material'
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import { Tab } from '@mui/material'
@@ -23,7 +23,7 @@ function App() {
 
   return (
     <Container maxWidth="xl">
-      <h1>Personal Trainer</h1>
+      
       <CssBaseline />
       <AppBar position="static" color="transparent">
         <Toolbar>

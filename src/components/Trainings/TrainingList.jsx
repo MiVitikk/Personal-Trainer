@@ -17,7 +17,7 @@ export default function TrainingList() {
         { field: "customerName", headerName: "Customer" },
         { 
             field: '_links.self.href',
-            headerName: '',
+            headerName: 'Delete',
             sortable: false,
             filter: false,
             cellRenderer: params => <Button onClick={() => deleteTraining(params.data._links.self.href)}>Delete</Button>
@@ -28,7 +28,7 @@ export default function TrainingList() {
         filter: true
     }
     const autoSizeStrategy = {
-        type: 'fitCellContents',
+        type: 'fitGridWidth',
         defaultMinWidth: 100,
 
     };
